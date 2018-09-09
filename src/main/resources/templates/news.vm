@@ -1,0 +1,50 @@
+<html>
+<body>
+<pre>
+    Hello VM.
+
+    ##俩个#号来注释
+    #*
+        块注释
+     *#
+    value1:$!{value1}
+    $!{value2}
+    ${value3}
+    #foreach($color in $colors)
+        Color $!{foreach.index}/$!{foreach.count}: $!{color}
+    #end
+    #foreach($key in $map.keySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{key} $map.get($key)
+    #end
+
+    #foreach($kv in $map.entrySet())
+        Number2 $!{foreach.index}/$!{foreach.count}: $!{kv.key} $!{kv.value}
+    #end
+
+User:$!{user.name}
+User:$!{user.getName()}
+
+#set($title= "hnust")
+Include: #include("header.vm")   ##把header.vm文件包含进来
+<br>
+Parse: #parse("header.vm")
+
+    ##预定义函数render_color
+    #macro (render_color, $color, $index)
+    Color By Macro $index, $color
+    #end
+
+    #foreach($color in $colors)
+        #render_color($color, $foreach.index)   ##调用函数render_color
+    #end
+
+    #set($hello = "hello")      ##定义变量hello
+    #set($hworld1 = "$!{hello} world")  ##双引号里的内容会被模板引擎解析
+    #set($hworld2 = '$!{hello} world')  ##单引号里的内容会不被模板引擎解析
+
+    hworld1:$hworld1
+    hworld2:$hworld2
+</pre>
+</body>
+
+</html>
